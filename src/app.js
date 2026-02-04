@@ -4,6 +4,7 @@ const errorhandler = require('./middlewares/errorhandler')
 const { default: mongoose } = require('mongoose')
 const workspacerouter = require('./controller/workspace_cnt')
 const authmiddlware = require('./middlewares/authmiddleware')
+const projectrouter = require('./controller/project_cnt')
 const app = express()
 
 app.use(express.json())
@@ -19,6 +20,7 @@ app.get('/',(req,res)=>{
 })
 app.use('/user',userrouter)
 app.use('/workspace',authmiddlware,workspacerouter)
+app.use('/workspace/project',authmiddlware,projectrouter)
 app.use(errorhandler)
 
 module.exports = app

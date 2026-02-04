@@ -9,6 +9,30 @@ workspacerouter.get('/all',async(req , res)=>{
   res.send(allworkspace)
 })
 
+workspacerouter.get('/fetch',async(req,res,next)=>{
+  const {workspaceId} = req.body
+  if(!workspaceId){
+    return res.status(400).send({
+      success:false,
+      message:"Invalid inputs"
+    })
+  }
+  const workspace = await workspacemodel.findById(workspaceId).select('-__v').populate('projects','-workspaceId -__v -tasks')
+  if(!workspace){
+    return res.status(404).send({
+      success:false,
+      message:"the workspace doesnt exist"
+    })
+  }
+  if(workspace.owner != req.user.userid && !workspace.members.includes(req.user.userid)){
+    return res.status(403).send({
+      success:false,
+      message:"You dont have the access to view this workspace"
+    })
+  }
+  res.status(200).send(workspace)
+})
+
 workspacerouter.post('/create',async(req,res,next)=>{
   const {workspaceName} = req.body
   if(!workspaceName){
