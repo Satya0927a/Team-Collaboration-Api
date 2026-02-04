@@ -6,7 +6,10 @@ const projectschema = new mongoose.Schema({
     required:true
   },
   description:String,
-  tasks:[],
+  tasks:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'Task'
+  }],
   priority:{
     type:String,
     required:true,

@@ -7,11 +7,13 @@ const taskschema = new mongoose.Schema({
   },
   status:{
     type:String,
-    enum:['completed','pending']
+    enum:['completed','pending'],
+    default:'pending'
   },
-  fromproject:{
+  fromProject:{
     type:mongoose.Schema.Types.ObjectId,
-    ref:'Project'
+    ref:'Project',
+    required:true
   }
 })
 const taskmodel = new mongoose.model('Task',taskschema)

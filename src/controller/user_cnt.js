@@ -94,6 +94,7 @@ userrouter.post('/login', async (req, res, next) => {
     next(error)
   }
 })
+//? for auth users
 userrouter.delete('/delete', authmiddlware, async (req, res, next) => {
   const { password } = req.body
   if (!password || password.length < 8) {
