@@ -21,7 +21,12 @@ taskrouter.post('/create',memberAccessMiddlware,async(req,res,next)=>{
     project.save()
     res.status(201).send({
       success:true,
-      message:"Added the task to the project"
+      message:"Added the task to the project",
+      newTask:{
+        _id:newtask._id,
+        task:newtask.task,
+        status:newtask.status,
+      }
     })
   } catch (error) {
     next(error)
