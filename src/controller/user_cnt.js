@@ -14,6 +14,20 @@ userrouter.get('/all', async (req, res, next) => {
     next(error)
   }
 })
+userrouter.get('/data',authmiddlware,async(req,res,next)=>{
+  const user = await usermodel.findById(req.user.userid).select('-passwordHash -__v').populate('workspace','-owner -__v -projects')
+  if(!user){
+    return res.status(404).send({
+      success:false,
+      message:"User not found"
+    })
+  }
+  res.status(200).send({
+    success:true,
+    message:"fetched the data",
+    userdata:user
+  })
+})
 userrouter.post('/create', async (req, res, next) => {
   try {
     const { username, password } = req.body
@@ -62,7 +76,7 @@ userrouter.post('/login', async (req, res, next) => {
         message: "The length of the username and password should be 3 and 8 respectively"
       })
     }
-    const user = await usermodel.findOne({ username: username }).populate('workspace', '-owner -__v -members -projects')
+    const user = await usermodel.findOne({ username: username }).populate('workspace', '-__v -members -projects')
     if (!user) {
       return res.status(401).send({
         success: false,
@@ -79,7 +93,7 @@ userrouter.post('/login', async (req, res, next) => {
     const payload = {
       userid: user._id,
     }
-    const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '15m' })
+    const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '30m' })
     res.status(200).send({
       success: true,
       message: "Logged in successfully",

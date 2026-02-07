@@ -3,8 +3,8 @@ const workspacemodel = require("../models/workspace_model")
 
 const memberAccessMiddlware = async (req, res, next) => {
   try {
-    if ("workspaceId" in req.body) {
-      const { workspaceId } = req.body
+    if ("workspaceId" in req.params) {
+      const { workspaceId } = req.params
       if (!workspaceId) {
         return res.status(400).send({
           success: false,

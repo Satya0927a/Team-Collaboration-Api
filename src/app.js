@@ -19,10 +19,10 @@ else{
 app.get('/',(req,res)=>{
   res.send("<h1>Welcome to my server</h1>")
 })
-app.use('/user',userrouter)
-app.use('/workspace',authmiddlware,workspacerouter)
-app.use('/workspace/project',authmiddlware,projectrouter)
-app.use('/workspace/project/task',authmiddlware,taskrouter)
+app.use('/api/user',userrouter)
+app.use('/api/workspace',authmiddlware,workspacerouter)
+app.use('/api/workspace/project',authmiddlware,projectrouter)
+app.use('/api/workspace/project/task',authmiddlware,taskrouter)
 app.use(errorhandler)
 
 module.exports = app

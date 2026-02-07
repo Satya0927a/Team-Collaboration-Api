@@ -11,7 +11,7 @@ workspacerouter.get('/all',async(req , res)=>{
 })
 
 //?for all memebers
-workspacerouter.get('/fetch',memberAccessMiddlware,async(req,res,next)=>{
+workspacerouter.get('/fetch/:workspaceId',memberAccessMiddlware,async(req,res,next)=>{
   const workspace = req.workspace
   res.status(200).send(workspace)
 })
@@ -19,6 +19,8 @@ workspacerouter.get('/fetch',memberAccessMiddlware,async(req,res,next)=>{
 //?for all users after auth
 workspacerouter.post('/create',async(req,res,next)=>{
   const {workspaceName} = req.body
+  console.log(workspaceName);
+  
   if(!workspaceName){
     return res.status(400).send({
       success:false,

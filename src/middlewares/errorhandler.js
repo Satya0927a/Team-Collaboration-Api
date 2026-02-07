@@ -9,7 +9,7 @@ const errorhandler = async(err,req , res , next)=>{
   else if (err.name == 'TokenExpiredError'){
     return res.status(401).send({
     success:false,
-    message:"Invalid token"
+    message:"Session expired please login again"
   })
   }
   return res.status(500).send({
